@@ -1,8 +1,14 @@
 from flask import Flask
+from .models import db
+
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'sexy_presentation'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # Verbindung zur SQLite-Datenbank
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Deaktiviere Track-Modifications
+    
+    db.init_app(app)
     
     from .views import views
     from .auth import auth
