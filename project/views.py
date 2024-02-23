@@ -3,9 +3,10 @@ from flask import Flask, Blueprint, render_template
 import yfinance as yf
 import plotly.express as px 
 
+
 views = Blueprint('views', __name__)
 
-@views.route('/dashboard')
+@views.route('/dashboard', methods=['GET', 'POST'])
 def home():
     
     my_graph = fetch_stock_data()
