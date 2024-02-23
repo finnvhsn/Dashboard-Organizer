@@ -1,5 +1,6 @@
 flask
 flask-login
 flask-sqlalchemy
-
-
+yfinance
+plotly.express
+certifi
