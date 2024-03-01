@@ -1,5 +1,4 @@
 from flask import Flask, Blueprint, render_template
-#from .models import User, id
 import yfinance as yf
 import plotly.express as px 
 

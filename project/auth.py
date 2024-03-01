@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import User, db
+from .models import add_user
 
 
 auth = Blueprint('auth', __name__)
@@ -23,11 +23,9 @@ def register():
             flash("Passwords must be the same.")
             
         else:
-            
-            new_user = User(username=username, email=email, password=password1)
-            db.session.add(new_user)
-            db.session.commit()
-            flash("User added successfully", message="success")
+
+            add_user(username, email, password1)
+            flash("User added successfully")
             return redirect(url_for('views.home'))        
         
     return render_template("register.html")

@@ -1,9 +1,11 @@
-from project import create_app, db
-from project.models import User
+from project import create_app
+from project.models import initialize_db
+
 
 app = create_app()
 
+initialize_db()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
+    

@@ -1,16 +1,21 @@
-from flask_sqlalchemy import SQLAlchemy
+import sqlite3
 
-db = SQLAlchemy()
+def initialize_db():
+    conn = sqlite3.connect('myusers.db')
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS users
+                      (id INTEGER PRIMARY KEY, username TEXT UNIQUE, email TEXT UNIQUE, password TEXT)''')
+    conn.commit()
+    conn.close()
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
-
+def add_user(username, email, password):
+    conn = sqlite3.connect('myusers.db')
+    try:
+        with conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
+    finally:
+        conn.close()
 
 
 
