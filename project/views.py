@@ -2,26 +2,47 @@ from flask import Flask, Blueprint, render_template
 import yfinance as yf
 import requests
 #import sqlite3
-import plotly.express as px 
-
+import plotly.express as px
 
 views = Blueprint('views', __name__)
 
-
+# Das ist die "Basis" Version einer Route
 @views.route('/dashboard', methods=['GET', 'POST'])
 def home():
     
     my_graph = fetch_stock_data()
     weather_url= weather()
-    articles = space_news()
-    
+    articles = space_news()    
     return render_template("test.html", my_graph=my_graph, weather_url=weather_url, articles=articles), 200
 
 
 
+#IGNORE THE FOLLOWING FUNCTIONS
 
+###########################################################
+# @views.route("/user1")
+# def page_user1():
+#     # Finanzen
+#     # Wetter in Frankfurt
+#     # Notizen
+#     return None
 
-#TODO NACHDEM EINE LOGIN FUNKTION,DIE DIE VARIABLE "ID" RETURNT GESCHRIEBEN WURDE, MUSS DIE FUNKTION ANHAND DER ID DEN URL VERÄNDERT
+# @views.route("/user2")
+# def page_user2():
+#     # Wetter in Berlin
+#     # Space news
+#     # Notizen
+#     return None
+
+# @views.route("/user3")
+# def page_user2():
+#     # Wetter in Stuttgart
+#     # Rennergebnisse Formel 1
+#     # Notizen
+#     return None
+
+#################################################################
+
 
 #Diese Funktion crawlt Finanz-daten aus dem Internet mit API "Yahoo-Finance" und generiert eine Grafik daraus
 def fetch_stock_data():
@@ -39,10 +60,43 @@ def fetch_stock_data():
     my_graph= my_graph.to_html()
     return my_graph
 
+# Bitte diese Funktion ignorieren
 
+# def stocks_2():
+#     # Download stock data for multiple stocks
+#     stocks = ['AAPL', 'GOOGL', 'AMZN']
+#     stock_data = yf.download(stocks, period="7d", interval="1h")
 
+#     # Create a new plot
+#     bokeh_plot = figure(x_axis_type="datetime", title="High Prices of Stocks")
 
-#TODO NACHDEM EINE LOGIN FUNKTION,DIE DIE VARIABLE "ID" RETURNT GESCHRIEBEN WURDE, MUSS DIE FUNKTION ANHAND DER ID DEN URL VERÄNDERT
+#     # Create a ColumnDataSource for the stock data
+#     source = ColumnDataSource(data=stock_data)
+
+#     # Add high prices of each stock to the plot
+#     for stock in stocks:
+#         bokeh_plot.line(x='Datetime', y='High_' + stock, source=source, legend_label=stock, line_width=2)
+
+#     # Add hover tool
+#     hover = HoverTool(tooltips=[
+#         ("Date", "@Datetime{%F}"),
+#         ("Price", "@High{%F}")
+#           ], 
+
+#     formatters={"@Datetime": "datetime",
+#                 "@High": "printf"})     
+#     bokeh_plot.add_tools(hover)
+
+#     # Customize the plot
+#     bokeh_plot.xaxis.axis_label = 'Date'
+#     bokeh_plot.yaxis.axis_label = 'Price in U$'
+#     bokeh_plot.legend.location = "bottom_right"
+
+#     # Convert plot to components
+#     script, div = components(bokeh_plot)
+
+#     return script, div
+
 
 #Diese Funktion verwendet ein fertiges Widget in Iframe format und verändert den Standort basiert auf der user-id
 def weather():    
