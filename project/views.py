@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, render_template
 import yfinance as yf
+import requests
 #import sqlite3
 import plotly.express as px 
 
@@ -12,16 +13,17 @@ def home():
     
     my_graph = fetch_stock_data()
     weather_url= weather()
+    articles = space_news()
     
-    return render_template("test.html", my_graph=my_graph, weather_url=weather_url), 200
+    return render_template("test.html", my_graph=my_graph, weather_url=weather_url, articles=articles), 200
 
 
 
 
-#Diese Funktion crawlt Finanz-daten aus dem Internet mit API "Yahoo-Finance" und generiert eine Grafik daraus
 
 #TODO NACHDEM EINE LOGIN FUNKTION,DIE DIE VARIABLE "ID" RETURNT GESCHRIEBEN WURDE, MUSS DIE FUNKTION ANHAND DER ID DEN URL VERÄNDERT
 
+#Diese Funktion crawlt Finanz-daten aus dem Internet mit API "Yahoo-Finance" und generiert eine Grafik daraus
 def fetch_stock_data():
     id=1    #-->ID ENTSPRICHT USER ID; DIE VON FUNKTION LOGIN GELIEFERT WIRD
     
@@ -38,11 +40,11 @@ def fetch_stock_data():
     return my_graph
 
 
-#Diese Funktion verwendet ein fertiges Widget in Iframe format und verändert den Standort basiert auf der user-id
+
 
 #TODO NACHDEM EINE LOGIN FUNKTION,DIE DIE VARIABLE "ID" RETURNT GESCHRIEBEN WURDE, MUSS DIE FUNKTION ANHAND DER ID DEN URL VERÄNDERT
 
-
+#Diese Funktion verwendet ein fertiges Widget in Iframe format und verändert den Standort basiert auf der user-id
 def weather():    
     id=1 #-->ID ENTSPRICHT USER ID; DIE VON FUNKTION LOGIN GELIEFERT WIRD
     
@@ -54,6 +56,29 @@ def weather():
     else:
         weather_url+= "berlin" 
     return weather_url
+
+
+# Diese Funktion verwendet die "Spaceflight News" API um Echtzeitdaten zu scrappen und stellt die 3 letzten Nachrichten zum Thema "Space" dar
+def space_news():
+    # Define the API endpoint
+    url = "https://api.spaceflightnewsapi.net/v3/articles?_limit=3"
+
+    try:
+        # Send GET request to the API
+        response = requests.get(url)
+
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            # Parse the JSON response
+            articles = response.json()
+
+            # Render the template with the articles data
+            return articles
+        else:
+            return "Failed to fetch data. Status code: {}".format(response.status_code)
+
+    except requests.exceptions.RequestException as e:
+        return "Error: {}".format(e)
 
 
 
@@ -85,6 +110,4 @@ def weather():
 #     # Close cursor and connection
 #     cursor.close()
 #     conn.close()
-
 #     return weather_url
-

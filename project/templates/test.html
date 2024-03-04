@@ -66,6 +66,24 @@
     </div>
     
 
-
+    <div class="space-news-container">
+        <h1>Space News</h1>
+        <ul>
+            {% for article in articles %}
+            <li>
+                <div class="article-container">
+                    <div class="article-details">
+                        <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                        {% if article.imageUrl %}
+                        <img src="{{ article.imageUrl }}" alt="Thumbnail" class="thumbnail" style= "max-width: 200px;">
+                        {% endif %}
+                        <strong>Published At:</strong> {{ article.publishedAt }}
+                        <p>{{ article.summary }}</p>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
