@@ -3,113 +3,190 @@ import yfinance as yf
 import requests
 #import sqlite3
 import plotly.express as px
-import pandas as pd
 
 views = Blueprint('views', __name__)
 
-# Das ist die "Basis" Version einer Route
-@views.route('/dashboard', methods=['GET', 'POST'])
-def home():
+# *******FUNKTION WIRD NICHT WEITER VERWENDET*******
+# @views.route('/dashboard', methods=['GET', 'POST'])
+# def home():
+#     #weather_url= weather() 
+#     articles = fetch_space_news()
+#     f1_results = fetch_f1_results()
+#     return render_template("test.html", finances=finances, weather_url=weather_url, articles=articles, f1_results=f1_results), 200
+
+@views.route("/user1")
+def page_user1():
+    #Calls the returned value of fetch_stock_data function
+    finances = fetch_stock_data() #Stockdata
     
-    my_graph = fetch_stock_data()
-    weather_url= weather()
-    articles = space_news()
-    f1_results = fetch_f1_results()
-    return render_template("test.html", my_graph=my_graph, weather_url=weather_url, articles=articles, f1_results=f1_results), 200
+    #Calls the returned value of weather function
+    weather_url = weather()             
+    
+    #Modifies the URL to the user's location
+    weather_url += "frankfurt-am-main" 
+    
+    #TODO Notizen fehlen
+    return render_template("test.html", finances=finances, weather=weather_url)  #TODO- create unique .html file with unique interface for each user ("test.html IS JUST A TEST")
 
 
+@views.route("/user2")
+def page_user2():
+    #Calls the returned value of fetch_space_news function
+    articles = fetch_space_news() #Space news
+    
+    #Calls the returned value of weather function
+    weather_url = weather() 
+    
+    #Modifies the URL to the user's location
+    weather_url += "berlin"
+    
+    #TODO Notizen fehlen
+    return render_template("test.html", articles=articles, weather=weather_url) #TODO- create unique .html file with unique interface for each user ("test.html IS JUST A TEST")
 
-#Diese Funktion crawlt Finanz-daten aus dem Internet mit API "Yahoo-Finance" und generiert eine Grafik daraus
+
+@views.route("/user3")
+def page_user3():
+    #Calls the returned value of fetch_f1_results function
+    f1_results = fetch_f1_results() 
+    
+    #Calls the returned value of weather function
+    weather_url = weather()     
+    
+    #Modifies the URL to the user's location
+    weather_url += "stuttgart"
+    
+    #TODO Notizen fehlen
+    return render_template("test.html", f1_results=f1_results, weather=weather_url) #TODO- create unique .html file with unique interface for each user ("test.html IS JUST A TEST")
+
+
 def fetch_stock_data():
-    id=1    #-->ID ENTSPRICHT USER ID; DIE VON FUNKTION LOGIN GELIEFERT WIRD
+    '''
+    Author: Rafael Guaraldo
+    Summary: Uses "Yahoo! Finance API" to scrappe stock prices from the last 30 days, 
+             with intervals of one hour each. The collected data are plotted with Plotly Express and returned via "finances" in .html format
+    Date: Feb 26th 2024
+    Source: https://pypi.org/project/yfinance/ & https://finance.yahoo.com/
+    '''
     
-    if   id==1:  
-        stock_data = yf.download("AMZN", period="30d", interval="1h")
-        
-    elif id==2:
-        stock_data = yf.download("GOOG", period="30d", interval="1h")
+    #Scrappe one month worth of AAPL Stocks with an interval of one hour
+    stock_data = yf.download("AAPl", period="30d", interval="1h")
     
-    else:
-        stock_data = yf.download("AAPl", period="30d", interval="1h")
-    my_graph = px.line(stock_data, y="High")
-    my_graph= my_graph.to_html()
-    return my_graph
+    #Plotify the collected data and customize the Labels
+    finances = px.line(stock_data, y="High", labels={"High": "AAPL"})
+    
+    #Converts the plot to html
+    finances= finances.to_html()
+    
+    #Returns scrapped and plotted data as html
+    return finances
 
 
-#Diese Funktion verwendet ein fertiges Widget in Iframe format und verändert den Standort basiert auf der user-id
-def weather():    
-    id=1 #-->ID ENTSPRICHT USER ID; DIE VON FUNKTION LOGIN GELIEFERT WIRD
+def weather():
+    '''
+    Author: Rafael Guaraldo
+    Summary: Sets an URL provided by "Euronews Weather-Widget" 
+             and returns it as "weather_url" to be modified for each individual user in later function
+    Date: Feb 28th 2024
+    Source: https://de.euronews.com/widgets
+    '''
     
-    weather_url = "https://de.euronews.com/embed/wetter/europa/deutschland/" #Hier den gewünschten URL verlinken und ggf. auch verändern
-    if id==1:  ##Vergleiche "username" und verändert die API zu seinem Standort  
-        weather_url += "frankfurt-am-main"
-    elif id==2:
-        weather_url+= "stuttgart"
-    else:
-        weather_url+= "berlin" 
+    #Sets the weather URL
+    weather_url = "https://de.euronews.com/embed/wetter/europa/deutschland/"
+    
+    #returns the URL as "weather_url"
     return weather_url
 
+def fetch_space_news():
+    '''
+    Author: Rafael Guaraldo
+    Summary: Uses the "Spaceflight News API" to scrappe
+             real-time news related to space programs, jsonifies the articles and returns them as "articles"
+    Date: Mar 4th 2024
+    Source: https://api.spaceflightnewsapi.net/documentation
+    '''
 
-# Diese Funktion verwendet die "Spaceflight News" API um Echtzeitdaten zu scrappen und stellt die 3 letzten Nachrichten zum Thema "Space" dar
-def space_news():
     # Define the API endpoint
     url = "https://api.spaceflightnewsapi.net/v3/articles?_limit=3"
-
     try:
         # Send GET request to the API
         response = requests.get(url)
 
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
+            
             # Parse the JSON response
             articles = response.json()
 
             # Render the template with the articles data
             return articles
+        
+        # Return Error and status code 
         else:
             return "Failed to fetch data. Status code: {}".format(response.status_code)
-
+        
+    # General expetion handeling for "catching" error
     except requests.exceptions.RequestException as e:
         return "Error: {}".format(e)
     
 
 def fetch_f1_results():
+    '''
+    Author: Rafael Guaraldo
+    Summary: Uses the F1-API provided by "Ergast Developer API" to scrappe 
+             historycal F1 Results, parces and filters the data and returns it 
+    Date: Mar 5th 2024
+    Source: https://api.spaceflightnewsapi.net/documentation
+    '''
+    
     # Define the API endpoint
     api_url = "https://ergast.com/api/f1/2023/results.json?limit=1000"
     
     try:
         # Send GET request to the API
         response = requests.get(api_url)
-        response.raise_for_status()  # Raise an exception for HTTP errors
+        
+        # Raise an exception for HTTP errors
+        response.raise_for_status()
         data = response.json()
 
         f1_results = []
         if 'MRData' in data and 'RaceTable' in data['MRData'] and 'Races' in data['MRData']['RaceTable']:
+            
+            # Extract race data
             races = data['MRData']['RaceTable']['Races']
             for race in races:
                 race_name = race['raceName']
                 results_data = []
+               
                 if 'Results' in race and race['Results']:
+                    # Extract only top 3 race results for each race
                     results = race['Results']
+                    
                     for result in results[:3]:
                         position = result['position']
                         driver_name = result['Driver']['givenName'] + " " + result['Driver']['familyName']
                         constructor = result['Constructor']['name']
                         results_data.append({'Position': position, 'Driver': driver_name, 'Constructor': constructor})
                 f1_results.append({'Race': race_name, 'Results': results_data})
-
+        
+        # Return a list containing dictonaries of F1 Race Results
         return f1_results
+    
+    # Exeption handling
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
+        
+    # Exeption handling
     except Exception as e:
         print(f"An error occurred: {e}")
+        
+    # Return empty list if exception occurs
     return []
 
 
+##########################################################################################
 
-
-# Bitte folgende Funktionen ignorieren
-
+# Please disregard following Function 
 # def stocks_2():
 #     # Download stock data for multiple stocks
 #     stocks = ['AAPL', 'GOOGL', 'AMZN']
@@ -128,8 +205,7 @@ def fetch_f1_results():
 #     # Add hover tool
 #     hover = HoverTool(tooltips=[
 #         ("Date", "@Datetime{%F}"),
-#         ("Price", "@High{%F}")
-#           ], 
+#         ("Price", "@High{%F}")], 
 
 #     formatters={"@Datetime": "datetime",
 #                 "@High": "printf"})     
@@ -144,59 +220,3 @@ def fetch_f1_results():
 #     script, div = components(bokeh_plot)
 
 #     return script, div
-
-####################################################
-
-# def weather():
-#     # Connect to the SQLite database
-#     conn = sqlite3.connect('myusers.db')
-#     cursor = conn.cursor()
-
-#     # Assume the table name is 'users' and 'id' is a column in that table
-#     cursor.execute('SELECT id FROM users')
-#     fetched_id = cursor.fetchone()  # Assuming you only need one id, otherwise use fetchall()
-
-#     # Check if an id was fetched
-#     if fetched_id:
-#         fetched_id = fetched_id[0]  # Unpack the fetched id from the tuple
-#     else:
-#         # Default id if no id is found in the database
-#         fetched_id = 1
-
-#     # Construct the weather_url based on the fetched id
-#     weather_url = "https://de.euronews.com/embed/wetter/europa/deutschland/"
-#     if fetched_id == 1:
-#         weather_url += "frankfurt-am-main"
-#     elif fetched_id == 2:
-#         weather_url += "stuttgart"
-#     else:
-#         weather_url += "berlin"
-
-#     # Close cursor and connection
-#     cursor.close()
-#     conn.close()
-#     return weather_url
-
-###########################################################
-# @views.route("/user1")
-# def page_user1():
-#     # Finanzen
-#     # Wetter in Frankfurt
-#     # Notizen
-#     return None
-
-# @views.route("/user2")
-# def page_user2():
-#     # Wetter in Berlin
-#     # Space news
-#     # Notizen
-#     return None
-
-# @views.route("/user3")
-# def page_user2():
-#     # Wetter in Stuttgart
-#     # Rennergebnisse Formel 1
-#     # Notizen
-#     return None
-
-#################################################################
