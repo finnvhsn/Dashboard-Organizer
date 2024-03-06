@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import add_user
+from flask_login import login_user
+from .models import add_user, check_user
 
 
 auth = Blueprint('auth', __name__)
@@ -33,5 +34,19 @@ def register():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        user = check_user(username, password)
+        
 
+        if user:
+            
+            login_user(user) 
+            return redirect(url_for('views.home')) 
+        else:
+            error = 'Username or password is wrong.'
+            return render_template("login.html", error=error)
+
+    return render_template("login.html")
