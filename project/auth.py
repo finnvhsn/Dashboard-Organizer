@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user
-from .models import add_user, check_user
+from flask_login import current_user, login_user
+from project.models import User
+from . import db
 
 
 auth = Blueprint('auth', __name__)
@@ -25,9 +26,12 @@ def register():
             
         else:
 
-            add_user(username, email, password1)
+            new_user = User(username=username, email=email, password=password1) ##maybe with generate_password_hash
+            # Add the new user to the database
+            db.session.add(new_user)
+            db.session.commit()
             flash("User added successfully")
-            return redirect(url_for('views.home'))        
+            return redirect(url_for('views.page_user1'))        
         
     return render_template("register.html")
 
@@ -38,15 +42,15 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-        user = check_user(username, password)
+        # Query the database for the user
+        user = User.query.filter_by(username=username).first()
         
-
-        if user:
-            
+        if user and user.password == password:
+            # If user exists and password matches, log the user in
             login_user(user) 
-            return redirect(url_for('views.home')) 
+            return redirect(url_for('views.page_user1')) 
         else:
             error = 'Username or password is wrong.'
             return render_template("login.html", error=error)
 
-    return render_template("login.html")
+    return render_template("login.html", user = current_user)
