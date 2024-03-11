@@ -31,7 +31,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash("User added successfully")
-            return redirect(url_for('views.page_user1'))        
+            return redirect(url_for('views.page_user1'))        #should be redirecting to a landing page
         
     return render_template("register.html")
 
@@ -48,7 +48,13 @@ def login():
         if user and user.password == password:
             # If user exists and password matches, log the user in
             login_user(user) 
-            return redirect(url_for('views.page_user1')) 
+          
+            if user.username == 'finn':
+                return redirect(url_for('views.page_user1'))    
+            elif user.username == 'max':
+                return redirect(url_for('views.page_user2'))
+            elif user.username == 'rafa':
+                return redirect(url_for('views.page_user3'))
         else:
             error = 'Username or password is wrong.'
             return render_template("login.html", error=error)

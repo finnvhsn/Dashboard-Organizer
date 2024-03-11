@@ -1,7 +1,6 @@
 from flask import Flask, Blueprint, render_template, views
 import yfinance as yf
 import requests
-#import sqlite3
 import plotly.express as px
 
 views = Blueprint('views', __name__)
@@ -14,7 +13,9 @@ views = Blueprint('views', __name__)
 #     f1_results = fetch_f1_results()
 #     return render_template("test.html", finances=finances, weather_url=weather_url, articles=articles, f1_results=f1_results), 200
 
-@views.route("/user1")
+
+
+@views.route("/finn")
 def page_user1():
     #Calls the returned value of fetch_stock_data function
     finances = fetch_stock_data() #Stockdata
@@ -26,10 +27,10 @@ def page_user1():
     weather_url += "frankfurt-am-main" 
     
     #TODO Notizen fehlen
-    return render_template("test.html", finances=finances, weather=weather_url)  #TODO- create unique .html file with unique interface for each user ("test.html IS JUST A TEST")
+    return render_template("test.html", finances=finances, weather=weather_url)  
 
 
-@views.route("/user2")
+@views.route("/max")
 def page_user2():
     #Calls the returned value of fetch_space_news function
     articles = fetch_space_news() #Space news
@@ -41,10 +42,10 @@ def page_user2():
     weather_url += "berlin"
     
     #TODO Notizen fehlen
-    return render_template("test.html", articles=articles, weather=weather_url) #TODO- create unique .html file with unique interface for each user ("test.html IS JUST A TEST")
+    return render_template("test.html", articles=articles, weather=weather_url) 
 
 
-@views.route("/user3")
+@views.route("/rafa")
 def page_user3():
     #Calls the returned value of fetch_f1_results function
     f1_results = fetch_f1_results() 
@@ -56,7 +57,7 @@ def page_user3():
     weather_url += "stuttgart"
     
     #TODO Notizen fehlen
-    return render_template("test.html", f1_results=f1_results, weather=weather_url) #TODO- create unique .html file with unique interface for each user ("test.html IS JUST A TEST")
+    return render_template("test.html", f1_results=f1_results, weather=weather_url)
 
 
 def fetch_stock_data():
