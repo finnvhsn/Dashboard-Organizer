@@ -31,7 +31,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash("User added successfully")
-            return redirect(url_for('views.page_user1'))        #should be redirecting to a landing page
+            return redirect(url_for('views.landingpage'))        #should be redirecting to a landing page
         
     return render_template("register.html")
 

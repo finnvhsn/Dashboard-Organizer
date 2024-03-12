@@ -15,6 +15,10 @@ views = Blueprint('views', __name__)
 
 
 
+@views.route("/landingpage")
+def landingpage():
+    return render_template("landingpage.html")
+
 @views.route("/finn")
 def page_user1():
     #Calls the returned value of fetch_stock_data function
