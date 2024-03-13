@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import current_user, login_user
+from flask_login import current_user, login_required, login_user, logout_user
 from project.models import User
 from . import db
 
@@ -31,7 +31,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash("User added successfully")
-            return redirect(url_for('views.landingpage'))        #should be redirecting to a landing page
+            return redirect(url_for('views.landingpage'))
         
     return render_template("register.html")
 
@@ -55,8 +55,18 @@ def login():
                 return redirect(url_for('views.page_user2'))
             elif user.username == 'rafa':
                 return redirect(url_for('views.page_user3'))
+            elif user.username is None:
+                flash("You must fill in a username")
         else:
-            error = 'Username or password is wrong.'
-            return render_template("login.html", error=error)
+            flash("Username or password is wrong")
+            return render_template("login.html")
 
     return render_template("login.html", user = current_user)
+
+
+@auth.route('/logout')
+#Should be implemented with more details
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
