@@ -4,16 +4,6 @@ from project.endpoint import *
 
 views = Blueprint('views', __name__)
 
-# *******FUNKTION WIRD NICHT WEITER VERWENDET*******
-# @views.route('/dashboard', methods=['GET', 'POST'])
-# def home():
-#     #weather_url= weather() 
-#     articles = fetch_space_news()
-#     f1_results = fetch_f1_results()
-#     return render_template("test.html", finances=finances, weather_url=weather_url, articles=articles, f1_results=f1_results), 200
-
-
-
 @views.route("/landingpage")
 def landingpage():
     return render_template("landingpage.html")
