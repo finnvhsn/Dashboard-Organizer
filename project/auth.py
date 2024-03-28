@@ -57,6 +57,9 @@ def login():
                 return redirect(url_for('views.page_user3'))
             elif user.username is None:
                 flash("You must fill in a username")
+            elif user.username == username:
+                if user.password == password:
+                    return redirect(url_for('views.landingpage'))
         else:
             flash("Username or password is wrong")
             return render_template("login.html")
