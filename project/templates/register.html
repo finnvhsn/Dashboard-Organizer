@@ -5,55 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <style>
-        /* CSS for styling */
-        body {
+        body 
+        {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: #EA5C54 ; /* Old browsers */
+            background: -moz-linear-gradient(-45deg,  #EA5C54  0%, #bb6dec 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#EA5C54 ), color-stop(100%,#bb6dec)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(-45deg,  #EA5C54  0%,#bb6dec 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(-45deg,  #EA5C54  0%,#bb6dec 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(-45deg,  #EA5C54  0%,#bb6dec 100%); /* IE10+ */
+            background: linear-gradient(135deg,  #EA5C54  0%,#bb6dec 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EA5C54 ', endColorstr='#bb6dec',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+            height: 617px;
+            
+        } 
+        
+        .grid-container
+        {
+          display: grid; 
+          grid-template-columns: 1fr  1fr; 
+          margin: 20px; 
+          padding: 20px;
+          column-gap: 130px;
+          justify-content: center;
+          
+         
+
         }
-        .container {
-            width: 300px;
-            margin: 50px auto;
+        .item2 
+        {  
+            width: 350px;
             background-color: #fff;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            height: 500px; 
+            background:rgba(0,0,0,0.13);
+
         }
-        h2 {
+
+        .item1
+        {
+           flex-direction: column;
+           align-items: center;
+           display: flex;  
+           justify-content: center; 
+           font-family: Arial, sans-serif;
+           font-size: 100px;
+           color: #fff;
+
+        }
+        
+        h2 
+        {
             text-align: center;
             margin-bottom: 20px;
-            color: #333;
+            color: #fff;
         }
-        label {
+        
+        label 
+        {
             display: block;
-            margin-bottom: 10px;
-            color: #333;
+            margin-bottom: 5px;
+            color: #fff;
         }
         input[type="text"],
-        input[type="password"] {
+        
+        input[type="password"]
+        {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 3px;
+            border-radius: 10px;
         }
-        input[type="submit"] {
+        
+        input[type="submit"] 
+        {
             width: 100%;
             padding: 10px;
             background-color: #333;
             color: #fff;
             border: none;
-            border-radius: 3px;
+            border-radius: 10px;
             cursor: pointer;
+            margin-bottom: 20px
         }
-        input[type="submit"]:hover {
+        
+        input[type="submit"]:hover 
+        {
             background-color: #555;
         }
+
+        .centered-text
+        {
+        text-align: center;
+        font-family: 'Arial', sans-serif;
+        font-size: 15px;
+        color: #fff; 
+        }
+     
+        
     </style>
+       
 </head>
 <body>
-    <div class="container">
+
+
+ <div class= "grid-container">
+
+     <div class= "item1">
+         Effeciency at a Glance 
+     </div>
+   
+
+
+     <div class="item2">
         <h2>Register</h2>
         <form action="/register" method="post">
             <label for="username">Username:</label>
@@ -64,8 +133,12 @@
             <input type="password" id="password1" name="password1" required> 
             <label for="password2">Confirm Password:</label> 
             <input type="password" id="password2" name="password2" required>
-            <input type="submit" value="Register">
+            <input type="submit" value="Register Now">
+            <p class= "centered-text">  Already have an account?   <a href="http://127.0.0.1:5000/login">Login now</a>   </p>
         </form>
     </div>
+    
+ </div>
+    
 </body>
 </html>
