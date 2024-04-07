@@ -4,6 +4,7 @@ import yfinance as yf
 import requests
 import plotly.express as px
 
+
 def fetch_stock_data():
     '''
     Author: Rafael Guaraldo
@@ -26,20 +27,60 @@ def fetch_stock_data():
     return finances
 
 
-def weather():
+# def weather():
+#     '''
+#     Author: Rafael Guaraldo
+#     Summary: Sets an URL provided by "Euronews Weather-Widget" 
+#              and returns it as "weather_url" to be modified for each individual user in later function
+#     Date: Feb 28th 2024
+#     Source: https://de.euronews.com/widgets
+#     '''
+    
+#     #Sets the weather URL
+#     weather_url = "https://de.euronews.com/embed/wetter/europa/deutschland/"
+    
+#     #returns the URL as "weather_url"
+#     return weather_url
+
+
+
+def get_weather_data():
     '''
     Author: Rafael Guaraldo
-    Summary: Sets an URL provided by "Euronews Weather-Widget" 
-             and returns it as "weather_url" to be modified for each individual user in later function
-    Date: Feb 28th 2024
-    Source: https://de.euronews.com/widgets
+    Summary: Uses the "OpenWeather API" to scrappe real-time weather data from the given coordinates,
+             jsonifies the data and returns them as "weather"
+    Date: April 7th 2024
+    Source: "https://openweathermap.org/current"
     '''
+    # Define the API Key
+    API_KEY = '63af8e971f2dca416a9dc9b2f05200ea'
+    latitude = 48.8566
+    longitude = 2.3522
+
+    # Define the API endpoint
+    url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={API_KEY}&units=metric'
     
-    #Sets the weather URL
-    weather_url = "https://de.euronews.com/embed/wetter/europa/deutschland/"
-    
-    #returns the URL as "weather_url"
-    return weather_url
+    try:
+        # Send GET request to the API
+        response = requests.get(url)
+
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+
+            # Parse the JSON response
+            weather = response.json()
+
+            # Return the weather data
+            return weather
+
+        # Return Error and status code 
+        else:
+            return "Failed to fetch data. Status code: {}".format(response.status_code)
+
+    # General expetion handeling for "catching" error
+    except requests.exceptions.RequestException as e:
+        return "Error: {}".format(e)
+ 
 
 def fetch_space_news():
     '''
