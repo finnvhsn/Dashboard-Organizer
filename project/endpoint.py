@@ -121,7 +121,7 @@ def fetch_f1_results():
     Summary: Uses the F1-API provided by "Ergast Developer API" to scrappe 
              historycal F1 Results, parces and filters the data and returns it 
     Date: Mar 5th 2024
-    Source: https://api.spaceflightnewsapi.net/documentation
+    Source: http://ergast.com/mrd/methods/results/
     '''
     
     # Define the API endpoint
