@@ -8,32 +8,13 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-<<<<<<< HEAD
     
-    #if request.method == 'POST': 
-        
-    username = request.form.get('username')
-    email = request.form.get('email')
-    password1 = request.form.get('password1')
-    password2 = request.form.get('password2')
-        
-    if   len(username) < 3:
-            flash("Username must be at least 3 characters.")
-    elif '@' not in email:
-            flash("Email must include @")
-    elif password1 is not None and len(password1) < 4:
-            flash("password has to be at least 4 characters long.")
-    elif password2 != password1:
-            flash("Passwords must be the same.")
-            
-    else:
-=======
+    
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
->>>>>>> 667f59fbe7304b6d0fb9c2729dd257bb14bc076a
 
         if len(username) < 3:
             flash("Username must be at least 3 characters.")
