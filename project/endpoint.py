@@ -87,32 +87,36 @@ def fetch_space_news():
     Author: Rafael Guaraldo
     Summary: Uses the "Spaceflight News API" to scrappe
              real-time news related to space programs, jsonifies the articles and returns them as "articles"
-    Date: Mar 4th 2024
+    Date: Mar 4th 2024/ Updated to V4 on the 09th April 2024
     Source: https://api.spaceflightnewsapi.net/documentation
     '''
 
-    # Define the API endpoint
-    url = "https://api.spaceflightnewsapi.net/v3/articles?_limit=3"
+    # Define the API endpoint for V4
+    url = "https://api.spaceflightnewsapi.net/v4/articles?_limit=3"
     try:
-        # Send GET request to the API
+        # Send GET request to the APIS
         response = requests.get(url)
 
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
             
             # Parse the JSON response
-            articles = response.json()
+            data = response.json()
 
-            # Render the template with the articles data
+            # In V4, the articles are under the "results" key in the response
+            articles = data["results"]
+
+            # Return the articles
             return articles
         
         # Return Error and status code 
         else:
             return "Failed to fetch data. Status code: {}".format(response.status_code)
         
-    # General expetion handeling for "catching" error
+    # General exception handling for "catching" error
     except requests.exceptions.RequestException as e:
         return "Error: {}".format(e)
+
     
 
 def fetch_f1_results():
@@ -121,7 +125,7 @@ def fetch_f1_results():
     Summary: Uses the F1-API provided by "Ergast Developer API" to scrappe 
              historycal F1 Results, parces and filters the data and returns it 
     Date: Mar 5th 2024
-    Source: https://api.spaceflightnewsapi.net/documentation
+    Source: http://ergast.com/mrd/methods/results/
     '''
     
     # Define the API endpoint

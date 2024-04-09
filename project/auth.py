@@ -8,6 +8,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
+<<<<<<< HEAD
     
     #if request.method == 'POST': 
         
@@ -26,14 +27,31 @@ def register():
             flash("Passwords must be the same.")
             
     else:
+=======
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+>>>>>>> 667f59fbe7304b6d0fb9c2729dd257bb14bc076a
 
-            new_user = User(username=username, email=email, password=password1) ##maybe with generate_password_hash
+        if len(username) < 3:
+            flash("Username must be at least 3 characters.")
+        elif '@' not in email:
+            flash("Email must include @")
+        elif len(password1) < 4:
+            flash("Password must be at least 4 characters long.")
+        elif password2 != password1:
+            flash("Passwords must match.")
+        else:
+            # Create a new user object
+            new_user = User(username=username, email=email, password=password1)
             # Add the new user to the database
             db.session.add(new_user)
             db.session.commit()
             flash("User added successfully")
             return redirect(url_for('views.landingpage'))
-        
+    
     return render_template("register.html")
 
 
