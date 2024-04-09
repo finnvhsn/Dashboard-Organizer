@@ -10,7 +10,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: linear-gradient( 135deg, #79F1A4 10%, #0E5CAD 100%);
+            background-color: #576B76
+
             
         }
         
@@ -39,7 +40,7 @@
         {
             display: block;
             margin-bottom: 10px;
-            color: #fff;
+            color: #C1E9FF;
         }
         input[type="text"],
         
@@ -49,7 +50,7 @@
             padding: 10px;
             margin-bottom: 30px;
             border: 1px solid #ccc;
-            border-radius: 10px;
+            border-radius: 10px;   
         }
         
         input[type="submit"] 
@@ -63,13 +64,22 @@
             cursor: pointer;
             margin-top: 20px;
             margin-bottom: 30px;
-            
+              
         }
         
         input[type="submit"]:hover 
         {
-            background-color: #555;
+            color: #C1E9FF;
         }
+
+        .centered-text
+        {
+            text-align: center;
+            color: #C1E9FF
+        }
+        
+        
+
     </style>
 
 </head>
@@ -96,7 +106,7 @@
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <input type="submit" value="Login">
+            <input class= "submit-button" type="submit" value="Login">
             <p class= "centered-text" > Start managing your day ! </p>
             
 
