@@ -10,14 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: #EA5C54 ; /* Old browsers */
-            background: -moz-linear-gradient(-45deg,  #EA5C54  0%, #bb6dec 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#EA5C54 ), color-stop(100%,#bb6dec)); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(-45deg,  #EA5C54  0%,#bb6dec 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(-45deg,  #EA5C54  0%,#bb6dec 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(-45deg,  #EA5C54  0%,#bb6dec 100%); /* IE10+ */
-            background: linear-gradient(135deg,  #EA5C54  0%,#bb6dec 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EA5C54 ', endColorstr='#bb6dec',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+            background-color: #576B76;
             height: 617px;
             
         } 
@@ -52,10 +45,19 @@
            justify-content: center; 
            font-family: Arial, sans-serif;
            font-size: 100px;
-           color: #fff;
+           color: #22292F;
+           opacity: 0;
+           transform: translateY(-20px);
+           transition: opacity 1.5s ease, transform 1.5s ease;
 
         }
         
+        .item1.show 
+        {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         h2 
         {
             text-align: center;
@@ -96,6 +98,17 @@
         {
             background-color: #555;
         }
+
+        .login-link
+        {
+            color: #C1E9FF;
+            text-decoration: none;
+        }
+
+        .centered-text
+        {
+            text-align: center;
+        }
     </style>
        
 </head>
@@ -131,11 +144,16 @@
             <label for="password2">Confirm Password:</label> 
             <input type="password" id="password2" name="password2" required>
             <input type="submit" value="Register">
-            <p class= "centered-text">  Already have an account?   <a href="http://127.0.0.1:5000/login">Login now</a>   </p>
+            <p class= "centered-text">  Already have an account?   <a href="http://127.0.0.1:5000/login" class= "login-link">Login now</a>   </p>
         </form>
     </div>
     
  </div>
-    
+ <script>
+    window.addEventListener("load", function () {
+        var item1 = document.querySelector(".item1");
+        item1.classList.add("show");
+    });
+</script>
 </body>
 </html>
