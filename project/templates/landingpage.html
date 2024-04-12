@@ -1,59 +1,94 @@
-
-<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Landing Page</title>
+    <title>Dashboard Website</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #576B76;
         }
-
-        header {
+        
+        .topbar {
             background-color: #333;
             color: #fff;
+            text-align: left; /* Text linksbündig ausrichten */
             padding: 10px 20px;
-            text-align: right;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
         }
-
-        header a {
+        
+        .topbar a {
             color: #fff;
             text-decoration: none;
-            margin-left: 20px;
+            margin-right: 20px; /* Anpassung des Abstands nach rechts */
         }
-
-        header a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
+        
+        .hero {
+            background-image: url('background.jpg');
+            background-size: cover;
+            color: #fff;
             text-align: center;
-            margin-top: 50px;
+            padding: 100px 0;
         }
-
-        h1 {
-            font-size: 36px;
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
             margin-bottom: 20px;
         }
-
         
+        .btn {
+            display: inline-block;
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 50px 20px;
+            justify-content: center;
+        }
+        
+        .feature {
+            text-align: center;
+            color: #C1E9FF;
+        }
+        
+        .feature img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0; 
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <a href="/login">Login</a>
-        <a href="/logout">Logout</a>
-        <a href="/register">Register</a>
-    </header>
-
-    <div class="container">
-        <h1>Create your own Dashboard</h1>
-        <img class="image"  src="C:\Users\schmidma\OneDrive - Hewlett Packard Enterprise\DHBW\Webprogrammierung\Dashboard-Organizer\project\templates\—Pngtree—modern simple elegant dark blue_1454711.png" alt="Hintergrundbild"/>
-        
+    <div class="topbar">
+        <a href="login">Login</a>
+        <a href="register">Register</a>
     </div>
  
 </body>
@@ -145,23 +180,23 @@
 <body>
     <header class="hero">
         <div class="hero-content">
-            <h1>Welcome to Your Dashboard</h1>
-            <p>Manage your data with ease and efficiency</p>
+            <h1>Create Your Dashboard</h1>
+            <p>Manage it with ease and efficiency</p>
             <a href="#features" class="btn">Explore Features</a>
         </div>
     </header>
     <section class="features">
         <div class="feature">
-            <h2>Personalized Widgtes</h2>
-            <p>Choose the content you want in your pesonalized widgets.</p>
+            <h2>Personalized Widgets</h2>
+            <p>Choose the content you want in your personalized widgets.</p>
         </div>
         <div class="feature">
             <h2>Customizable Dashboard</h2>
             <p>Create personalized dashboards tailored to your specific needs.</p>
         </div>
         <div class="feature">
-            <h2>Real live Data  </h2>
-            <p> Dynamic visualizations and meaningful data in real time</p>
+            <h2>Real-time Data</h2>
+            <p>Dynamic visualizations and meaningful data in real time.</p>
         </div>
     </section>
     <footer class="footer">
