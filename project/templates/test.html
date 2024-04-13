@@ -84,7 +84,7 @@
         }
         
        
-        .container-stock
+        .container-painting
         {
             display: flex;
             background-color: #fff;
@@ -125,9 +125,10 @@
 
         
 
-        .weather_header
+        .city-name
         {   
             text-align:center;
+            font-size: 30px;
             
         }
 
@@ -230,12 +231,13 @@
             background-color: #dddddd;
         }
 
+
         img 
         {
-            max-width: 700px; /* Maximum width is 100% of the container */
-            max-height: 327px; /* Maximum height is 100% of the container */
+            max-width: 700px; /* Maximum width is 700px */
+            max-height: 327px; /* Maximum height is 327px */
             display: block; /* Ensure the image is displayed as a block element */
-            margin: auto; /* Center the image horizontally */
+            margin: auto; 
         }
        
 
@@ -249,17 +251,14 @@
 
     <header class= "header">
         <div class="header_title"> Personal Dashboard</div>
-        <div class="header_menu"> <p>my account </p>  <p>  <a style= "color: #C1E9FF; text-decoration: none;" href="http://127.0.0.1:5000/login">Login </a> </p>  <p>settings</p></div> 
+        <div class="header_menu"> <p>My Account </p>  <p>  <a style= "color: #C1E9FF; text-decoration: none;" href="http://127.0.0.1:5000/login">Login </a> </p>  <p>Settings</p></div> 
     </header>
 
-    <div class="container-stock">
+    <div class="container-painting">
           <img src="{{ image }}" alt="Random Painting">
       </div>
 
     <div class="container-weather">
-        <div class="weather_header">
-            <h2>Weather Data</h2>
-        </div>
         <div class="weather" id="weather-widget">
             <div class="weather-info">
                 <h2 class="city-name"></h2> <!-- City name added here -->
@@ -294,24 +293,38 @@
     
 
     <div class="space-news-container">
-        <h2 class= "news_header">Space News</h2>
-        <ul>
-            {% for article in articles %}
-            <li>
-                <div class="article-container">
-                    <div class="article-details">
-                        <h2><a class="header_color" href="{{ article.url }}">{{ article.title }}</a></h2>
-                        {% if article.imageUrl %}
-                        <img src="{{ article.imageUrl }}" alt="Thumbnail" class="thumbnail" style= "width: 150px;">
+        <h2 class="news_header">Space News</h2>
+        <table>
+            <tbody>
+                {% for article in articles %}
+                <tr>
+                    <td>
+                        {% if article.image_url %}
+                        <img src="{{ article.image_url }}" alt="Thumbnail" class="thumbnail" style="width: 200px;">
                         {% endif %}
-                        <strong>Published At:</strong> {{ article.publishedAt }}
-                        <p>{{ article.summary }}</p>
-                    </div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <h2><a class="header_color" href="{{ article.url }}">{{ article.title }}</a></h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p>{{ article.summary }}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+    
+    
+    
 
     <div class="f1-results-table">
         <h2 class= "f1_header"> F1 Results </h2>

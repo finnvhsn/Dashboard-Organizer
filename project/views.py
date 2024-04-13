@@ -36,7 +36,7 @@ def page_user1():
     weather_data = get_weather_data()
     
     #TODO Notizen fehlen
-    return render_template("test.html", finances=finances, weather_data=weather_data)  
+    return render_template("test.html", image=image, weather_data=weather_data)  
 
 
 @views.route("/max")
