@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
     </script>
@@ -25,6 +24,7 @@
         document.querySelector('.weatherwidget-io').setAttribute('data-temperature', temperature + "°C");
         document.querySelector('.weatherwidget-io').setAttribute('data-humidity', "Humidity: " + humidity + "%");
         document.querySelector('.weatherwidget-io').setAttribute('data-wind', "Wind Speed: " + windSpeed + " m/s");
+
     </script>
         
         <style> 
@@ -107,7 +107,6 @@
 
         .stock_header
         {
-            item-align:center;   
             padding-left: 30px;
             
         }
@@ -231,8 +230,14 @@
             background-color: #dddddd;
         }
 
+        img 
+        {
+            max-width: 700px; /* Maximum width is 100% of the container */
+            max-height: 327px; /* Maximum height is 100% of the container */
+            display: block; /* Ensure the image is displayed as a block element */
+            margin: auto; /* Center the image horizontally */
+        }
        
-        
 
     </style>
         
@@ -247,14 +252,8 @@
         <div class="header_menu"> <p>my account </p>  <p>  <a style= "color: #C1E9FF; text-decoration: none;" href="http://127.0.0.1:5000/login">Login </a> </p>  <p>settings</p></div> 
     </header>
 
-    
     <div class="container-stock">
-        <!--
-          <h2 class= "stock_header">Stocks</h2>
-          <div class="graph">
-              {{ finances | safe }}
-          </div>
-          -->
+          <img src="{{ image }}" alt="Random Painting">
       </div>
 
     <div class="container-weather">

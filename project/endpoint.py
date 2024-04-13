@@ -1,47 +1,70 @@
 
 from flask import Flask
-import yfinance as yf
+import random
 import requests
-import plotly.express as px
 
 
-def fetch_stock_data():
+def fetch_random_painting():
     '''
     Author: Rafael Guaraldo
-    Summary: Uses "Yahoo! Finance API" to scrappe stock prices from the last 30 days, 
-             with intervals of one hour each. The collected data are plotted with Plotly Express and returned via "finances" in .html format
-    Date: Feb 26th 2024
-    Source: https://pypi.org/project/yfinance/ & https://finance.yahoo.com/
+    Summary: Uses the official "Harvard Museum API" to scrappe art pieces from the museum's inventory.  
+             To speed up the fetching, only a couple of paintings (selected by their ID) will be displayed
+    Date: April 13th 2024
+    Source: https://github.com/harvardartmuseums/api-docs & https://api-toolkit.herokuapp.com/
     '''
-    
-    #Scrappe one month worth of AAPL Stocks with an interval of one hour
-    stock_data = yf.download("AAPl", period="30d", interval="1h")
-    
-    #Plotify the collected data and customize the Labels
-    finances = px.line(stock_data, y="High", labels={"High": "AAPL"})
-    
-    #Converts the plot to html
-    finances= finances.to_html()
-    
-    #Returns scrapped and plotted data as html
-    return finances
+    # Define the API Key
+    Painting_KEY = "b047612c-7da3-419b-96c6-2f38cff69d1b"
+    # Define the base-Url
+    BASE_URL = "https://api.harvardartmuseums.org"
+
+    # Define the paintings to show
+    painting_ids = ["232037","230721","231248", "4988", "304349"]
+    painting_id = random.choice(painting_ids)
+
+    try:
+        # Define the API-Endpoint
+        endpoint = f"{BASE_URL}/object/{painting_id}?apikey={Painting_KEY}"
+
+        # Send GET request to the API
+        response = requests.get(endpoint)
+        data = response.json()
+
+        # Check if the data contains images
+        if 'images' in data and data['images']:
+            image_url = data['images'][0]['baseimageurl']
+            # Print image ID for debugging
+            print (painting_id)
+            # Return the URL of the image
+            return image_url
+        else:
+            # Return error message if no images found
+            return "Failed to fetch image. Status code: {}".format(response.status_code)
+        
+    # General expetion handeling for "catching" error
+    except requests.exceptions.RequestException as e:
+        return "Error: {}".format(e)
 
 
-# def weather():
+# def fetch_stock_data():
 #     '''
 #     Author: Rafael Guaraldo
-#     Summary: Sets an URL provided by "Euronews Weather-Widget" 
-#              and returns it as "weather_url" to be modified for each individual user in later function
-#     Date: Feb 28th 2024
-#     Source: https://de.euronews.com/widgets
+#     Summary: Uses "Yahoo! Finance API" to scrappe stock prices from the last 30 days, 
+#              with intervals of one hour each. The collected data are plotted with Plotly Express and returned via "finances" in .html format
+#     Date: Feb 26th 2024
+#     Source: https://pypi.org/project/yfinance/ & https://finance.yahoo.com/
 #     '''
     
-#     #Sets the weather URL
-#     weather_url = "https://de.euronews.com/embed/wetter/europa/deutschland/"
+#     #Scrappe one month worth of AAPL Stocks with an interval of one hour
+#     stock_data = yf.download("AAPl", period="30d", interval="1h")
     
-#     #returns the URL as "weather_url"
-#     return weather_url
-
+#     #Plotify the collected data and customize the Labels
+#     finances = px.line(stock_data, y="High", labels={"High": "AAPL"})
+    
+#     #Converts the plot to html
+#     finances= finances.to_html()
+    
+#     #Returns scrapped and plotted data as html
+#     return finances
 
 
 def get_weather_data():
@@ -53,12 +76,12 @@ def get_weather_data():
     Source: "https://openweathermap.org/current"
     '''
     # Define the API Key
-    API_KEY = '63af8e971f2dca416a9dc9b2f05200ea'
-    latitude = 48.8566
-    longitude = 2.3522
+    Weather_KEY = '63af8e971f2dca416a9dc9b2f05200ea'
+    latitude = 48.8566 #Coordinates to desired city
+    longitude = 2.3522 #Coordinates to desired city
 
     # Define the API endpoint
-    url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={API_KEY}&units=metric'
+    url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={Weather_KEY}&units=metric'
     
     try:
         # Send GET request to the API
@@ -129,7 +152,7 @@ def fetch_f1_results():
     '''
     
     # Define the API endpoint
-    api_url = "https://ergast.com/api/f1/2023/results.json?limit=1000"
+    api_url = "https://ergast.com/api/f1/2024/results.json?limit=300"
     
     try:
         # Send GET request to the API
