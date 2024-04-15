@@ -92,7 +92,8 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0.5, 0.3);
             grid-area: left; 
             margin-left: 10px;
-             
+            text-align: center;
+            display: block;
         }
 
         .graph
@@ -164,9 +165,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0.5, 0.5);
             border-radius: 15px;
             overflow-y: auto;
-            margin-bottom: 10px;
-
-              
+            margin-bottom: 10px;              
         }
         
         .space-news-container::-webkit-scrollbar
@@ -249,13 +248,17 @@
             background-color: #dddddd;
         }
 
+        .painting-link{
+            text-align: center;
+        }
 
-        img 
+        
+        .artwork 
         {
             max-width: 700px; /* Maximum width is 700px */
             max-height: 327px; /* Maximum height is 327px */
             display: block; /* Ensure the image is displayed as a block element */
-            margin: auto; 
+            margin: auto;
         }
        
 
@@ -277,8 +280,11 @@
     </header>
 
     <div class="container-painting">
-          <img src="{{ image }}" alt="Random Painting">
-      </div>
+        <a href="https://harvardartmuseums.org/collections/object/{{ painting_id }}?position={{ painting_id }}" target="_blank" id="painting-link">
+            <img class= "artwork" src="{{ image }}" alt="Random Painting">
+        </a> <!-- Close the <a> tag here -->
+    </div>
+    
 
       <div class="container-weather">
         <div class="weather" id="weather-widget">

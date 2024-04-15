@@ -12,7 +12,7 @@ def landingpage():
 def page_user4():
 
     #Calls the returned value of fetch_random_painting function
-    image = fetch_random_painting()
+    image, painting_id = fetch_random_painting()
 
     # Calls the get_weather_data function to fetch weather data
     weather_data = get_weather_data()
@@ -23,13 +23,13 @@ def page_user4():
     #Calls the returned value of fetch_f1_results function
     f1_results = fetch_f1_results() 
     
-    return render_template("test.html", image=image, weather_data=weather_data, articles=articles, f1_results=f1_results)  
+    return render_template("test.html", image=image, painting_id=painting_id, weather_data=weather_data, articles=articles, f1_results=f1_results)  
 
 
 @views.route("/finn")
 def page_user1():  
     #Calls the returned value of fetch_random_painting function
-    image = fetch_random_painting()
+    image, painting_id = fetch_random_painting()
 
     # Calls the get_weather_data function to fetch weather data
     weather_data = get_weather_data()
@@ -40,13 +40,13 @@ def page_user1():
     #Calls the returned value of fetch_f1_results function
     f1_results = fetch_f1_results() 
     
-    return render_template("test.html", image=image, weather_data=weather_data, articles=articles, f1_results=f1_results)  
+    return render_template("test.html", image=image, painting_id=painting_id, weather_data=weather_data, articles=articles, f1_results=f1_results)  
 
 
 @views.route("/max")
 def page_user2():   
     #Calls the returned value of fetch_random_painting function
-    image = fetch_random_painting()
+    image, painting_id = fetch_random_painting()
 
     # Calls the get_weather_data function to fetch weather data
     weather_data = get_weather_data()
@@ -57,13 +57,13 @@ def page_user2():
     #Calls the returned value of fetch_f1_results function
     f1_results = fetch_f1_results() 
     
-    return render_template("test.html", image=image, weather_data=weather_data, articles=articles, f1_results=f1_results)  
+    return render_template("test.html", image=image, painting_id=painting_id, weather_data=weather_data, articles=articles, f1_results=f1_results)  
 
 
 @views.route("/rafa")
 def page_user3(): 
     #Calls the returned value of fetch_random_painting function
-    image = fetch_random_painting()
+    image, painting_id = fetch_random_painting()
 
     # Calls the get_weather_data function to fetch weather data
     weather_data = get_weather_data()
@@ -74,7 +74,7 @@ def page_user3():
     #Calls the returned value of fetch_f1_results function
     f1_results = fetch_f1_results() 
     
-    return render_template("test.html", image=image, weather_data=weather_data, articles=articles, f1_results=f1_results)  
+    return render_template("test.html", image=image, painting_id=painting_id, weather_data=weather_data, articles=articles, f1_results=f1_results)  
 
 
 @views.route("/notes")

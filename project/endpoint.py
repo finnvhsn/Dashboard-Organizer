@@ -35,7 +35,7 @@ def fetch_random_painting():
             # Print image ID for debugging
             print (painting_id)
             # Return the URL of the image
-            return image_url
+            return image_url, painting_id
         else:
             # Return error message if no images found
             return "Failed to fetch image. Status code: {}".format(response.status_code)
