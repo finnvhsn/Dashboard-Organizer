@@ -45,40 +45,18 @@ def fetch_random_painting():
         return "Error: {}".format(e)
 
 
-# def fetch_stock_data():
-#     '''
-#     Author: Rafael Guaraldo
-#     Summary: Uses "Yahoo! Finance API" to scrappe stock prices from the last 30 days, 
-#              with intervals of one hour each. The collected data are plotted with Plotly Express and returned via "finances" in .html format
-#     Date: Feb 26th 2024
-#     Source: https://pypi.org/project/yfinance/ & https://finance.yahoo.com/
-#     '''
-    
-#     #Scrappe one month worth of AAPL Stocks with an interval of one hour
-#     stock_data = yf.download("AAPl", period="30d", interval="1h")
-    
-#     #Plotify the collected data and customize the Labels
-#     finances = px.line(stock_data, y="High", labels={"High": "AAPL"})
-    
-#     #Converts the plot to html
-#     finances= finances.to_html()
-    
-#     #Returns scrapped and plotted data as html
-#     return finances
-
-
 def get_weather_data():
     '''
     Author: Rafael Guaraldo
-    Summary: Uses the "OpenWeather API" to scrappe real-time weather data from the given coordinates,
-             jsonifies the data and returns them as "weather"
+    Summary: Uses the "OpenWeather API" to scrappe real-time weather data from the defined coordinates,
+             parse the data and returns them as the json-object "weather"
     Date: April 7th 2024
     Source: "https://openweathermap.org/current"
     '''
     # Define the API Key
     Weather_KEY = '63af8e971f2dca416a9dc9b2f05200ea'
-    latitude = 48.8566 #Coordinates to desired city
-    longitude = 2.3522 #Coordinates to desired city
+    latitude = 48.7747223 #Coordinates to desired city
+    longitude = 9.1714106 #Coordinates to desired city
 
     # Define the API endpoint
     url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={Weather_KEY}&units=metric'
@@ -140,7 +118,6 @@ def fetch_space_news():
     except requests.exceptions.RequestException as e:
         return "Error: {}".format(e)
 
-    
 
 def fetch_f1_results():
     '''
