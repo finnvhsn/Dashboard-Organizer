@@ -32,9 +32,7 @@ def fetch_random_painting():
         # Check if the data contains images
         if 'images' in data and data['images']:
             image_url = data['images'][0]['baseimageurl']
-            # Print image ID for debugging
-            print (painting_id)
-            # Return the URL of the image
+            # Return the URL and ID of the image
             return image_url, painting_id
         else:
             # Return error message if no images found

@@ -9,16 +9,12 @@
     </script>
 
     <script>
-        // Access weather data passed from Flask
         const weatherData = {{ weather_data | tojson | safe }};
-    
-        // Extract relevant weather information
         const weatherDescription = weatherData.weather[0].description;
         const temperature = weatherData.main.temp;
         const humidity = weatherData.main.humidity;
         const windSpeed = weatherData.wind.speed;
     
-        // Update weather widget
         document.querySelector('.weatherwidget-io').setAttribute('data-label_1', weatherData.name);
         document.querySelector('.weatherwidget-io').setAttribute('data-weather', weatherDescription);
         document.querySelector('.weatherwidget-io').setAttribute('data-temperature', temperature + "°C");
@@ -29,14 +25,14 @@
         
         <style> 
         
-            body 
-            {
-                margin: 0;
-                padding: 0;
-                font-family: Arial, sans-serif;
-                background-color: #D6DBDF;
-                overflow-x: hidden;
-            }
+        body 
+        {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #D6DBDF;
+            overflow-x: hidden;
+        }
     
 
         .grid-container
@@ -103,8 +99,6 @@
             size: 70%;
             padding-top: 45px; 
         }
-
-        
 
         .stock_header
         {
@@ -175,7 +169,7 @@
         
         .article-container
         {
-         width: auto;
+            width: auto;
         }
 
         .news_header
@@ -208,10 +202,10 @@
         
         .f1_header
         {
-          text-align: center;
-          background-color: #fff;
-          height: 40px;
-          padding-top: 3px;
+            text-align: center;
+            background-color: #fff;
+            height: 40px;
+            padding-top: 3px;
         }
 
         .f1-results-table::-webkit-scrollbar
@@ -252,7 +246,6 @@
             text-align: center;
         }
 
-        
         .artwork 
         {
             max-width: 700px; /* Maximum width is 700px */
@@ -261,7 +254,6 @@
             margin: auto;
         }
        
-
     </style>
         
 </head>
@@ -282,41 +274,37 @@
     <div class="container-painting">
         <a href="https://harvardartmuseums.org/collections/object/{{ painting_id }}?position={{ painting_id }}" target="_blank" id="painting-link">
             <img class= "artwork" src="{{ image }}" alt="Random Painting">
-        </a> <!-- Close the <a> tag here -->
+        </a>
     </div>
     
 
       <div class="container-weather">
         <div class="weather" id="weather-widget">
             <div class="weather-info">
-                <h2 class="city-name"><a href="#" target="_blank" id="city-link"></a></h2> <!-- City name link -->
-                <img class="weather-icon" src="" alt="Weather Icon"> <!-- Weather icon will be displayed here -->
+                <h2 class="city-name"><a href="#" target="_blank" id="city-link"></a></h2>
+                <img class="weather-icon" src="" alt="Weather Icon">
                 <h2 class="temperature">--°C</h2>
                 <p id="weather-info">Loading...</p>
             </div>
         </div>
         <script>
-            // Update weather widget
-            const weatherIconCode = weatherData.weather[0].icon; // Get the icon code from weather data
-            const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}.png`; // Construct the URL for the weather icon
-            document.querySelector('.weather-icon').setAttribute('src', weatherIconUrl); // Set the src attribute of the weather icon
+            const weatherIconCode = weatherData.weather[0].icon;
+            const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}.png`;
+            document.querySelector('.weather-icon').setAttribute('src', weatherIconUrl);
             
-            // Update city name link
             const cityNameLink = document.getElementById('city-link');
             cityNameLink.textContent = weatherData.name;
-            cityNameLink.href = `https://openweathermap.org/city/${weatherData.id}`; // Set the href attribute of the city name link
+            cityNameLink.href = `https://openweathermap.org/city/${weatherData.id}`;
             
-            // Update temperature
             document.querySelector('.temperature').textContent = `${weatherData.main.temp}°C`;
     
     
-            // Construct weather info HTML
             const weatherInfo = `
                 <p><strong>Weather:</strong> ${weatherData.weather[0].description}</p>
                 <p><strong>Humidity:</strong> ${weatherData.main.humidity}%</p>
                 <p><strong>Wind Speed:</strong> ${weatherData.wind.speed} m/s</p>
             `;
-            document.getElementById('weather-info').innerHTML = weatherInfo; // Set the inner HTML of weather info container
+            document.getElementById('weather-info').innerHTML = weatherInfo;
         </script>
     </div>
         
@@ -337,7 +325,7 @@
                         <table>
                             <tr>
                                 <td colspan="2">
-                                    <h2><a class="header_color" href="{{ article.url }}">{{ article.title }}</a></h2>
+                                    <h2><a class="header_color" href="{{ article.url }}" target="_blank" >{{ article.title }}</a></h2>
                                 </td>
                             </tr>
                             <tr>
