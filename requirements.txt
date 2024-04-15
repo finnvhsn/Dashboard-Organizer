@@ -1,8 +1,6 @@
 flask
 flask-login
 flask-sqlalchemy
-yfinance
-plotly.express
+random
 certifi
 requests
-pandas
