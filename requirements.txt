@@ -1,6 +1,5 @@
 flask
 flask-login
 flask-sqlalchemy
-random
 certifi
 requests
