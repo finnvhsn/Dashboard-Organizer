@@ -4,7 +4,7 @@ from project.endpoint import *
 
 views = Blueprint('views', __name__)
 
-@views.route("/landingpage")
+@views.route("/")
 def landingpage():
     return render_template("landingpage.html")
 
@@ -61,3 +61,9 @@ def page_user3():
     
     #TODO Notizen fehlen
     return render_template("test.html", f1_results=f1_results, weather_data=weather_data)
+
+
+@views.route("/notes")
+def notes():
+    return render_template("notes.html")
+
