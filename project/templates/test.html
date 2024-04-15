@@ -149,9 +149,11 @@
             margin: 10px 0;
         }
         
-         .city-name {
+         .city-name a {
             font-size: 30px;
             margin-bottom: 10px;
+            text-decoration: none;
+            color: inherit;
         }
 
         .space-news-container
@@ -269,7 +271,6 @@
         <div class="header_title"> Personal Dashboard</div>
         <div class="header_menu">
             <p>  <a style= "color: #C1E9FF; text-decoration: none;" href="notes">My Notes </a> </p>  
-            <p>My Account </p>  
             <p>  <a style= "color: #C1E9FF; text-decoration: none;" href="/">Logout </a> </p>  
             <p>Settings</p>
         </div> 
@@ -279,10 +280,10 @@
           <img src="{{ image }}" alt="Random Painting">
       </div>
 
-    <div class="container-weather">
+      <div class="container-weather">
         <div class="weather" id="weather-widget">
             <div class="weather-info">
-                <h2 class="city-name"></h2> <!-- City name added here -->
+                <h2 class="city-name"><a href="#" target="_blank" id="city-link"></a></h2> <!-- City name link -->
                 <img class="weather-icon" src="" alt="Weather Icon"> <!-- Weather icon will be displayed here -->
                 <h2 class="temperature">--°C</h2>
                 <p id="weather-info">Loading...</p>
@@ -294,12 +295,14 @@
             const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}.png`; // Construct the URL for the weather icon
             document.querySelector('.weather-icon').setAttribute('src', weatherIconUrl); // Set the src attribute of the weather icon
             
-            // Update city name
-            document.querySelector('.city-name').textContent = weatherData.name;
+            // Update city name link
+            const cityNameLink = document.getElementById('city-link');
+            cityNameLink.textContent = weatherData.name;
+            cityNameLink.href = `https://openweathermap.org/city/${weatherData.id}`; // Set the href attribute of the city name link
             
             // Update temperature
             document.querySelector('.temperature').textContent = `${weatherData.main.temp}°C`;
-
+    
     
             // Construct weather info HTML
             const weatherInfo = `
@@ -310,7 +313,7 @@
             document.getElementById('weather-info').innerHTML = weatherInfo; // Set the inner HTML of weather info container
         </script>
     </div>
-    
+        
     
 
     <div class="space-news-container">
