@@ -55,16 +55,9 @@ def get_weather_data():
     '''
     # Define the API Key
     Weather_KEY = '63af8e971f2dca416a9dc9b2f05200ea'
-
-    latitude = 0
-    longitude = 0
-  
-    if User.username == "finn":
-        latitude = 50.110922 #Coordinates to desired city
-        longitude = 8.682127 #Coordinates to desired city
-    else:
-        latitude = 48.7761648 #Coordinates to desired city
-        longitude = 9.1730105 #Coordinates to desired city
+    
+    latitude = 48.7761648 #Coordinates to desired city
+    longitude = 9.1730105 #Coordinates to desired city
 
     # Define the API endpoint
     url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={Weather_KEY}&units=metric'
