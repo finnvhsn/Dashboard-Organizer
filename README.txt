@@ -1,4 +1,4 @@
--------------------------------------------------------Personal Dashboard-Organizer---------------------------------------------------------------
+--------------------------------------------------Personal Dashboard-Organizer-------------------------------------------
 
 This is a simple project for the Web Programming and Distributed Systems class. Our team's goal was to create a simple dashboard that would 
 show useful information for each of our users. The Dashboard-Organizer V1 uses 4 different APIs to scrape real-time information 
@@ -36,7 +36,7 @@ a different collection of art from the Harvard Museum of Art, the weather from t
 
 
 
----------------------------------------------------How to Install and Run this Application---------------------------------------------------------
+---------------------------------------How to Install and Run this Application-------------------------------------
 
 
 1- Open the terminal of your choice (Ctrl + ` or Strg + Ö) and navigate to the /Dashboard-Organizer directory.
@@ -48,7 +48,7 @@ a different collection of art from the Harvard Museum of Art, the weather from t
     -> Alternative 2: Open the main.py file and run it from there
 
 
-------------------------------------------------------------How to Use this Application------------------------------------------------------------
+--------------------------------------------How to Use this Application----------------------------------------------------
 
 
 1. The application will open on the landing page, please login to continue
@@ -68,7 +68,7 @@ DISCLAIMER: For presentation purposes, the routes are not protected by "login_re
 
 
 
----------------------------------------------------------------------Credits------------------------------------------------------------------------
+------------------------------------------------------Credits-----------------------------------------------------------
 Developer Team: 
 - Finn Von Heesen
 - Maximilian Schmidt
