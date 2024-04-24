@@ -2,7 +2,6 @@
 from flask import Flask
 import random
 import requests
-
 from .models import User
 
 
@@ -90,7 +89,7 @@ def fetch_space_news():
     Summary: Uses the "Spaceflight News API" to scrappe
              real-time news related to space programs, jsonifies the articles and returns them as "articles"
     Date: Mar 4th 2024/ Updated to V4 on the 09th April 2024
-    Source: https://api.spaceflightnewsapi.net/documentation
+    Source: https://api.spaceflightnewsapi.net/documentation & https://spaceflightnewsapi.net/
     '''
 
     # Define the API endpoint for V4
