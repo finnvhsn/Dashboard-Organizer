@@ -83,12 +83,13 @@ def get_weather_data():
     except requests.exceptions.RequestException as e:
         return "Error: {}".format(e)
  
-@cache.cached(timeout=43.200)
+@cache.cached(timeout=3.600, key_prefix= "fetch_space_news")
 def fetch_space_news():
     '''
     Author: Rafael Guaraldo
     Summary: Uses the "Spaceflight News API" to scrappe
              real-time news related to space programs, jsonifies the articles and returns them as "articles"
+             Due to unstable servers, this function is cached for 1 hour.
     Date: Mar 4th 2024/ Updated to V4 on the 09th April 2024
     Source: https://api.spaceflightnewsapi.net/documentation & https://spaceflightnewsapi.net/
     '''
@@ -118,19 +119,20 @@ def fetch_space_news():
     # General exception handling for "catching" error
     except requests.exceptions.RequestException as e:
         return "Error: {}".format(e)
-
-
+    
+@cache.cached(timeout=43.200, key_prefix='fetch_f1_results')
 def fetch_f1_results():
     '''
     Author: Rafael Guaraldo
     Summary: Uses the F1-API provided by "Ergast Developer API" to scrappe 
-             historycal F1 Results, parces and filters the data and returns it 
+             historycal F1 Results, parces and filters the data and returns it. 
+             Due to unstable servers, this function is cached for 12 hours.
     Date: Mar 5th 2024
     Source: http://ergast.com/mrd/methods/results/
     '''
-    
+
     # Define the API endpoint
-    api_url = "https://ergast.com/api/f1/2024/results.json?limit=100"
+    api_url = "https://ergast.com/api/f1/2024/results.json?limit=300"
     
     try:
         # Send GET request to the API
@@ -160,16 +162,17 @@ def fetch_f1_results():
                         results_data.append({'Position': position, 'Driver': driver_name, 'Constructor': constructor})
                 f1_results.append({'Race': race_name, 'Results': results_data})
         
-        # Return a list containing dictonaries of F1 Race Results
+        # Return a list containing dictionaries of F1 Race Results
         return f1_results
     
-    # Exeption handling
+    # Exception handling
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
+        # Return an empty list if an HTTP error occurs
+        return []
         
-    # Exeption handling
+    # Exception handling
     except Exception as e:
         print(f"An error occurred: {e}")
-        
-    # Return empty list if exception occurs
-    return []
+        # Return an empty list if any other error occurs
+        return []
