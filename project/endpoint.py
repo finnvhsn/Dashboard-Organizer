@@ -3,6 +3,7 @@ from flask import Flask
 import random
 import requests
 from .models import User
+from . import cache 
 
 
 def fetch_random_painting():
@@ -82,7 +83,7 @@ def get_weather_data():
     except requests.exceptions.RequestException as e:
         return "Error: {}".format(e)
  
-
+@cache.cached(timeout=43.200)
 def fetch_space_news():
     '''
     Author: Rafael Guaraldo
@@ -129,7 +130,7 @@ def fetch_f1_results():
     '''
     
     # Define the API endpoint
-    api_url = "https://ergast.com/api/f1/2024/results.json?limit=300"
+    api_url = "https://ergast.com/api/f1/2024/results.json?limit=100"
     
     try:
         # Send GET request to the API

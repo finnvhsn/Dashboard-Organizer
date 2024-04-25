@@ -1,15 +1,19 @@
 from os import path
 from flask import Flask
+from flask_caching import Cache
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 DB_NAME = "my_database.db"
+cache = Cache()
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'sexy_presentation'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['CACHE_TYPE'] = 'simple'
+    cache.init_app(app) 
     db.init_app(app)
 
     from project.views import views
