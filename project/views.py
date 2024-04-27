@@ -98,7 +98,6 @@ def add_note():
     if request.method == 'POST': 
         data = request.get_json()
         note_text = data.get('note')
-
         if note_text:
             new_note = Note(data=note_text, user_id=current_user.id, date=datetime.now())
             db.session.add(new_note)

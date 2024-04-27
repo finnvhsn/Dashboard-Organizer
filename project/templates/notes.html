@@ -75,9 +75,9 @@
 
 
     <div class="form-container">
-        <form method="POST" onsubmit="addNote(event)">
-            <textarea name="note" id="note" class="form-control" placeholder="Enter your note"></textarea>
-            <br />
+        <form onsubmit="event.preventDefault(); addNote();">
+            <textarea id="note" class="form-control" placeholder="Enter your note"></textarea>
+            <br>
             <div align="center">
                 <button type="submit" class="btn btn-primary">Add Note</button>
             </div>
@@ -90,35 +90,37 @@
             console.log(`Deleting note with ID: ${noteId}`);
         }
 
-        function addNote(event) {
-    event.preventDefault(); // Prevent form submission
+        function addNote() {
+        const noteInput = document.getElementById('note').value.trim();
+        if (noteInput) {
+            fetch('/add_note', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ note: noteInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Note added successfully') {
+                    // Clear textarea after adding note
+                    document.getElementById('note').value = '';
 
-    const noteText = document.getElementById('note').value.trim();
-    if (noteText) {
-        // AJAX request to add note to database
-        fetch('/add_note', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ note: noteText }),
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Note added successfully');
-                // Clear textarea after adding note
-                document.getElementById('note').value = '';
-                // Reload notes after adding new note
-                fetchNotes(); // Optional: Implement this function to reload notes
-            } else {
-                console.error('Failed to add note');
-            }
-        })
-        .catch(error => {
-            console.error('Error adding note:', error);
-        });
+                    // Append newly added note to the list
+                    const notesList = document.getElementById('notes');
+                    const noteElement = document.createElement('li');
+                    noteElement.className = 'list-group-item';
+                    noteElement.textContent = noteInput;
+                    notesList.appendChild(noteElement);
+                } else {
+                    console.error('Failed to add note:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error adding note:', error);
+            });
+        }
     }
-}
 
     </script>
 </body>
