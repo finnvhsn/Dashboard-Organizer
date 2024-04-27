@@ -26,15 +26,32 @@
             z-index: 1000;
         }
 
-        .header_menu {
-            display: flex; 
-            gap: 20px;
-            padding-right: 50px;
-        }
-
         .header_title {
             font-size: 35px; 
             padding-left: 5px;
+        }
+
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #notes {
+            padding: 0;
+            list-style: none;
+        }
+
+        #note {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
@@ -43,5 +60,66 @@
         <div class="header_title">My Notes</div>
     </header>
 
+    <div class="container">
+        <h1 align="center">Notes</h1>
+        <ul id="notes">
+            {% for note in user.notes %}
+            <li class="list-group-item">
+                {{ note.data }}
+                <button type="button" class="close" onclick="deleteNote({ note,id })">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+    <div class="form-container">
+        <form method="POST" onsubmit="addNote(event)">
+            <textarea name="note" id="note" class="form-control" placeholder="Enter your note"></textarea>
+            <br />
+            <div align="center">
+                <button type="submit" class="btn btn-primary">Add Note</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function deleteNote(noteId) {
+            // Implement delete logic here (e.g., make AJAX request to delete note)
+            console.log(`Deleting note with ID: ${noteId}`);
+        }
+
+        function addNote(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const noteText = document.getElementById('note').value.trim();
+    if (noteText) {
+        // AJAX request to add note to database
+        fetch('/add_note', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ note: noteText }),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Note added successfully');
+                // Clear textarea after adding note
+                document.getElementById('note').value = '';
+                // Reload notes after adding new note
+                fetchNotes(); // Optional: Implement this function to reload notes
+            } else {
+                console.error('Failed to add note');
+            }
+        })
+        .catch(error => {
+            console.error('Error adding note:', error);
+        });
+    }
+}
+
+    </script>
 </body>
 </html>

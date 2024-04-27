@@ -1,5 +1,9 @@
-from flask import Flask, Blueprint, render_template, views
+from datetime import datetime
+from flask import Flask, Blueprint, jsonify, redirect, render_template, request, url_for, views
+from flask_login import current_user, login_required
 from project.endpoint import *
+from project.models import Note
+from . import db
 
 
 views = Blueprint('views', __name__)
@@ -77,7 +81,54 @@ def page_user3():
     return render_template("test.html", image=image, painting_id=painting_id, weather_data=weather_data, articles=articles, f1_results=f1_results)  
 
 
-@views.route("/notes")
-def notes():
-    return render_template("notes.html")
+@views.route("/notes", methods=["GET", "POST"])
+@login_required
+def note():
+    if request.method == 'POST': 
+        note_text = request.form.get('note')
+        print(f"Received note text: {note_text}")        
+  
+    return render_template("notes.html", user=current_user)
 
+    
+@views.route("/add_note", methods=["POST"])
+@login_required
+def add_note():
+
+    if request.method == 'POST': 
+        data = request.get_json()
+        note_text = data.get('note')
+
+        if note_text:
+            new_note = Note(data=note_text, user_id=current_user.id, date=datetime.now())
+            db.session.add(new_note)
+            db.session.commit()
+            return jsonify({'message': 'Note added successfully'}), 200
+        else:
+            return jsonify({'message': 'Note text is missing'}), 400
+
+    user_notes = current_user.notes  # Holen Sie sich alle Notizen des aktuellen Benutzers
+    return render_template("notes.html", user=current_user, notes=user_notes)
+    
+
+
+
+
+
+ 
+    
+def delete_all_notes():
+    try:
+        # Führe das Löschkommando aus
+        db.session.query(Note).delete()
+        db.session.commit()
+        print("Alle Einträge in der Note-Tabelle wurden erfolgreich gelöscht.")
+    except Exception as e:
+        print(f"Fehler beim Löschen der Einträge: {str(e)}")
+        db.session.rollback()  # Rollback im Falle eines Fehlers
+
+
+@views.route("/delete_all_notes", methods=["GET"])
+def delete_all_notes_view():
+    delete_all_notes()
+    return "Alle Notizen wurden erfolgreich gelöscht."
