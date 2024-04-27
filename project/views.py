@@ -110,11 +110,25 @@ def add_note():
     return render_template("notes.html", user=current_user, notes=user_notes)
     
 
+@views.route("/delete_note/<int:note_id>", methods=["DELETE"])
+@login_required
+def delete_note(note_id):
+    note = Note.query.get_or_404(note_id)
+
+    if note.user_id == current_user.id:
+        try:
+            db.session.delete(note)
+            db.session.commit()
+            return jsonify({'message': 'Note deleted successfully'}), 200
+        except Exception as e:
+            return jsonify({'message': f'Failed to delete note: {str(e)}'}), 500
+    else:
+        return jsonify({'message': 'Unauthorized to delete this note'}), 403
 
 
 
 
- 
+
     
 def delete_all_notes():
     try:

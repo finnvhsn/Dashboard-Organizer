@@ -64,64 +64,81 @@
         <h1 align="center">Notes</h1>
         <ul id="notes">
             {% for note in user.notes %}
-            <li class="list-group-item">
+            <li id="note-{{ note.id }}" class="list-group-item">
                 {{ note.data }}
-                <button type="button" class="close" onclick="deleteNote({ note,id })">
+                <button type="button" class="close" onclick="deleteNote({{ note.id }})">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </li>
             {% endfor %}
         </ul>
 
-
-    <div class="form-container">
-        <form onsubmit="event.preventDefault(); addNote();">
-            <textarea id="note" class="form-control" placeholder="Enter your note"></textarea>
-            <br>
-            <div align="center">
-                <button type="submit" class="btn btn-primary">Add Note</button>
-            </div>
-        </form>
+        <div class="form-container">
+            <form onsubmit="event.preventDefault(); addNote();">
+                <textarea id="note" class="form-control" placeholder="Enter your note"></textarea>
+                <br>
+                <div align="center">
+                    <button type="submit" class="btn btn-primary">Add Note</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
         function deleteNote(noteId) {
-            // Implement delete logic here (e.g., make AJAX request to delete note)
-            console.log(`Deleting note with ID: ${noteId}`);
-        }
-
-        function addNote() {
-        const noteInput = document.getElementById('note').value.trim();
-        if (noteInput) {
-            fetch('/add_note', {
-                method: 'POST',
+            fetch(`/delete_note/${noteId}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ note: noteInput })
+                }
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === 'Note added successfully') {
-                    // Clear textarea after adding note
-                    document.getElementById('note').value = '';
-
-                    // Append newly added note to the list
-                    const notesList = document.getElementById('notes');
-                    const noteElement = document.createElement('li');
-                    noteElement.className = 'list-group-item';
-                    noteElement.textContent = noteInput;
-                    notesList.appendChild(noteElement);
+            .then(response => {
+                if (response.ok) {
+                    // Remove the deleted note from the UI
+                    const noteElement = document.getElementById(`note-${noteId}`);
+                    if (noteElement) {
+                        noteElement.remove();
+                    }
                 } else {
-                    console.error('Failed to add note:', data.message);
+                    console.error('Failed to delete note');
                 }
             })
             .catch(error => {
-                console.error('Error adding note:', error);
+                console.error('Error deleting note:', error);
             });
         }
-    }
 
+        function addNote() {
+            const noteInput = document.getElementById('note').value.trim();
+            if (noteInput) {
+                fetch('/add_note', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ note: noteInput })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Note added successfully') {
+                        // Clear textarea after adding note
+                        document.getElementById('note').value = '';
+
+                        // Append newly added note to the list
+                        const notesList = document.getElementById('notes');
+                        const noteElement = document.createElement('li');
+                        noteElement.className = 'list-group-item';
+                        noteElement.textContent = noteInput;
+                        notesList.appendChild(noteElement);
+                    } else {
+                        console.error('Failed to add note:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding note:', error);
+                });
+            }
+        }
     </script>
 </body>
 </html>
