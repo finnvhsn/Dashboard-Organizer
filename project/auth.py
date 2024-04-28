@@ -8,6 +8,11 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    Author: Finn von Heesen
+    Description: This function is used to sign up a new user to create then his own personalized dashboard.
+    Date of development: 01. April 2024
+    """
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
@@ -38,6 +43,11 @@ def register():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Author: Finn von Heesen
+    Description: This function is used to sign in a user to reach his personalized dashboard.
+    Date of development: 02. April 2024
+    """
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -70,5 +80,10 @@ def login():
 @auth.route('/logout')
 @login_required
 def logout():
+    """
+    Author: Finn von Heesen
+    Description: This function logs out a logged in user.
+    Date of development: 012. April 2024
+    """
     logout_user()
     return redirect(url_for('auth.login'))

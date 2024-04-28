@@ -8,9 +8,9 @@ from . import cache
 def fetch_random_painting():
     '''
     Author: Rafael Guaraldo
-    Summary: Uses the official "Harvard Museum API" to scrappe art pieces from the museum's inventory.  
+    Description: Uses the official "Harvard Museum API" to scrappe art pieces from the museum's inventory.  
              To speed up the fetching, only a couple of paintings (selected by their ID) will be displayed
-    Date: April 13th 2024
+    Date of development: April 13th 2024
     Source: https://github.com/harvardartmuseums/api-docs & https://api-toolkit.herokuapp.com/
     '''
     # Define the API Key
@@ -47,9 +47,9 @@ def fetch_random_painting():
 def get_weather_data():
     '''
     Author: Rafael Guaraldo
-    Summary: Uses the "OpenWeather API" to scrappe real-time weather data from the defined coordinates,
+    Description: Uses the "OpenWeather API" to scrappe real-time weather data from the defined coordinates,
              parse the data and returns them as the json-object "weather"
-    Date: April 7th 2024
+    Date of development: April 7th 2024
     Source: "https://openweathermap.org/current"
     '''
     # Define the API Key
@@ -86,10 +86,10 @@ def get_weather_data():
 def fetch_space_news():
     '''
     Author: Rafael Guaraldo
-    Summary: Uses the "Spaceflight News API" to scrappe
+    Description: Uses the "Spaceflight News API" to scrappe
              real-time news related to space programs, jsonifies the articles and returns them as "articles"
              Due to unstable servers, this function is cached for 1 hour.
-    Date: Mar 4th 2024/ Updated to V4 on the 09th April 2024
+    Date of development: Mar 4th 2024/ Updated to V4 on the 09th April 2024
     Source: https://api.spaceflightnewsapi.net/documentation & https://spaceflightnewsapi.net/
     '''
 
@@ -123,10 +123,10 @@ def fetch_space_news():
 def fetch_f1_results():
     '''
     Author: Rafael Guaraldo
-    Summary: Uses the F1-API provided by "Ergast Developer API" to scrappe 
+    Description: Uses the F1-API provided by "Ergast Developer API" to scrappe 
              historycal F1 Results, parces and filters the data and returns it. 
              Due to unstable servers, this function is cached for 12 hours.
-    Date: Mar 5th 2024
+    Date of development: Mar 5th 2024
     Source: http://ergast.com/mrd/methods/results/
     '''
 

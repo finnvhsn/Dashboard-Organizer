@@ -35,6 +35,11 @@ we would like to implement personalised API parameters for each individual user.
 a different collection of art from the Harvard Museum of Art, the weather from their current IP address location, and so on.
 
 
+Docstrings:
+    * Only the functions with a complex structure within this project are described in a docstring. 
+    
+    * ALl smaller functions do not have a documentation due to their simplicity.
+
 
 ---------------------------------------How to Install and Run this Application-------------------------------------
 

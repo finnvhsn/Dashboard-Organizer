@@ -9,6 +9,11 @@ DB_NAME = "my_database.db"
 cache = Cache()
 
 def create_app():
+    """
+    Author: Finn von Heesen
+    Description: This function creates the application with all requirements needed.
+    Date of development: 15. March 2024
+    """
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'sexy_presentation'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
@@ -40,6 +45,11 @@ def create_app():
 
 
 def create_database(app):
+    """
+    Author: Finn von Heesen
+    Description: This function creates the database.
+    Date of development: 15. March 2024
+    """
     if not path.exists('website/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')

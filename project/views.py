@@ -13,7 +13,12 @@ def landingpage():
     return render_template("landingpage.html")
 
 @views.route("/finn")
-def page_user1():  
+def page_user1(): 
+    """
+    Author: Rafael Guaraldo
+    Description: This function calls the api functions from the endpoint.py file.
+    Date of development: 13. April 2024
+    """ 
     #Calls the returned value of fetch_random_painting function
     image, painting_id = fetch_random_painting()
 
@@ -30,7 +35,12 @@ def page_user1():
 
 
 @views.route("/max")
-def page_user2():   
+def page_user2():
+    """
+    Author: Rafael Guaraldo
+    Description: This function calls the api functions from the endpoint.py file.
+    Date of development: 13. April 2024
+    """    
     #Calls the returned value of fetch_random_painting function
     image, painting_id = fetch_random_painting()
 
@@ -47,7 +57,12 @@ def page_user2():
 
 
 @views.route("/rafa")
-def page_user3(): 
+def page_user3():
+    """
+    Author: Rafael Guaraldo
+    Description: This function calls the api functions from the endpoint.py file.
+    Date of development: 13. April 2024
+    """ 
     #Calls the returned value of fetch_random_painting function
     image, painting_id = fetch_random_painting()
 
@@ -76,7 +91,11 @@ def note():
 @views.route("/add_note", methods=["POST"])
 @login_required
 def add_note():
-
+    """
+    Author: Finn von Heesen
+    Description: This function is created to add a note to the table note in the database.
+    Date of development: 25. April 2024
+    """
     if request.method == 'POST': 
         data = request.get_json()
         note_text = data.get('note')
@@ -95,6 +114,11 @@ def add_note():
 @views.route("/delete_note/<int:note_id>", methods=["DELETE"])
 @login_required
 def delete_note(note_id):
+    """
+    Author: Finn von Heesen
+    Description: This function is created to delete a note from the table note in the database.
+    Date of development: 25. April 2024
+    """
     note = Note.query.get_or_404(note_id)
 
     if note.user_id == current_user.id:
@@ -116,8 +140,13 @@ def delete_note(note_id):
     
     
 def delete_all_notes():
+    """
+    Author: Finn von Heesen
+    Description: This function is created to delete all notes from the table note in the database.
+    It is mainly written for testing reasons and provides no functionality directly on the web application.
+    Date of development: 28. April 2024
+    """
     try:
-    
         db.session.query(Note).delete()
         db.session.commit()
         print("All values from the Note table have been deleted.")
@@ -133,8 +162,13 @@ def delete_all_notes_view():
 
 
 def delete_all_users():
+    """
+    Author: Finn von Heesen
+    Description: This function is created to delete all users from the table user in the database.
+    It is mainly written for testing reasons and provides no functionality directly on the web application.
+    Date of development: 28. April 2024
+    """
     try:
-       
         db.session.query(User).delete()
         db.session.commit()
         print("All values from the User table have been deleted.")
