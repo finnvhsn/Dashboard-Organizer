@@ -127,6 +127,15 @@
 
      <div class="item2">
         <h2>Register</h2>
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <!-- End of flash messages -->
         <form action="/register" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
