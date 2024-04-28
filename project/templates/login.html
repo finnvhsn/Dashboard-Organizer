@@ -89,23 +89,10 @@
 
 </head>
 <body>
-
-    
    
-    
-    
     
     <div class="container">
         <h2>Login</h2>
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="flash-message">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <!-- End of flash messages -->
         <form action="/login" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>

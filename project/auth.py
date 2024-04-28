@@ -8,8 +8,6 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    
-    
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
@@ -68,7 +66,6 @@ def login():
 
 
 @auth.route('/logout')
-#Should be implemented with more details
 @login_required
 def logout():
     logout_user()

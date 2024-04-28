@@ -12,24 +12,6 @@ views = Blueprint('views', __name__)
 def landingpage():
     return render_template("landingpage.html")
 
-@views.route("/all")
-def page_user4():
-
-    #Calls the returned value of fetch_random_painting function
-    image, painting_id = fetch_random_painting()
-
-    # Calls the get_weather_data function to fetch weather data
-    weather_data = get_weather_data()
-    
-    #Calls the returned value of fetch_space_news function
-    articles = fetch_space_news()
-
-    #Calls the returned value of fetch_f1_results function
-    f1_results = fetch_f1_results() 
-    
-    return render_template("test.html", image=image, painting_id=painting_id, weather_data=weather_data, articles=articles, f1_results=f1_results)  
-
-
 @views.route("/finn")
 def page_user1():  
     #Calls the returned value of fetch_random_painting function
@@ -106,7 +88,7 @@ def add_note():
         else:
             return jsonify({'message': 'Note text is missing'}), 400
 
-    user_notes = current_user.notes  # Holen Sie sich alle Notizen des aktuellen Benutzers
+    user_notes = current_user.notes 
     return render_template("notes.html", user=current_user, notes=user_notes)
     
 
@@ -129,19 +111,39 @@ def delete_note(note_id):
 
 
 
+
+######## The following functions and routes are for deleting values from each table in the database ########
+    
     
 def delete_all_notes():
     try:
-        # Führe das Löschkommando aus
+    
         db.session.query(Note).delete()
         db.session.commit()
-        print("Alle Einträge in der Note-Tabelle wurden erfolgreich gelöscht.")
+        print("All values from the Note table have been deleted.")
     except Exception as e:
-        print(f"Fehler beim Löschen der Einträge: {str(e)}")
-        db.session.rollback()  # Rollback im Falle eines Fehlers
+        print(f"Error while deleting: {str(e)}")
+        db.session.rollback() 
 
 
 @views.route("/delete_all_notes", methods=["GET"])
 def delete_all_notes_view():
     delete_all_notes()
-    return "Alle Notizen wurden erfolgreich gelöscht."
+    return "All notes have been deleted successfully."
+
+
+def delete_all_users():
+    try:
+       
+        db.session.query(User).delete()
+        db.session.commit()
+        print("All values from the User table have been deleted.")
+    except Exception as e:
+        print(f"Error while deleting: {str(e)}")
+        db.session.rollback() 
+
+
+@views.route("/delete_all_users", methods=["GET"])
+def delete_all_users_view():
+    delete_all_users()
+    return "All users have been deleted successfully."
