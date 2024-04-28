@@ -16,6 +16,8 @@ def register():
 
         if len(username) < 3:
             flash("Username must be at least 3 characters.")
+        elif username == User.username:
+            flash("Username already exists.")
         elif '@' not in email:
             flash("Email must include @")
         elif len(password1) < 4:
